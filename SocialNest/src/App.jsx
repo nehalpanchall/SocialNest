@@ -20,9 +20,33 @@ const App = () => {
   const createPost = (titleField, descField) => {
     let getTitle = titleField.current.value;
     let getDesc = descField.current.value;
-    setPost((currArr) => {
-      return [{ title: getTitle, description: getDesc }, ...currArr];
-    });
+
+    if (updateItemObj) {
+      //update
+
+      let prevItems = [...post]; // [{1},{2},{3}]
+      let object = prevItems.map(function (itemObj) {
+        if (itemObj === updateItemObj) {
+          return { title: getTitle, description: getDesc };
+        } else {
+          return itemObj;
+        }
+      });
+
+      //   prevItems = has array of objects: map function on array
+      //   object = has only object
+
+      setPost(object);
+
+      setUpdateItemObj(null);
+    } else {
+      //create
+      let newItem = { title: getTitle, description: getDesc };
+      let newArr = [newItem, ...post];
+      setPost(newArr);
+    }
+
+    //
 
     titleField.current.value = '';
     descField.current.value = '';
