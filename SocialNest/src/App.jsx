@@ -19,7 +19,7 @@ const App = () => {
     let getTitle = titleField.current.value;
     let getDesc = descField.current.value;
     setPost((currArr) => {
-      return [...currArr, { title: getTitle, description: getDesc }];
+      return [{ title: getTitle, description: getDesc }, ...currArr];
     });
 
     titleField.current.value = '';
