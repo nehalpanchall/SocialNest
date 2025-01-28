@@ -1,8 +1,13 @@
 import { useRef, useState } from 'react';
 
-const CreatePost = ({ createPost }) => {
+const CreatePost = ({ createPost, updateItemObj }) => {
   let titleField = useRef(null);
   let descField = useRef(null);
+
+  if (updateItemObj) {
+    titleField.current.value = updateItemObj.title;
+    descField.current.value = updateItemObj.description;
+  }
 
   return (
     <>

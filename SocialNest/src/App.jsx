@@ -8,6 +8,8 @@ import Card from './components/Card';
 import { useState } from 'react';
 
 const App = () => {
+  const [updateItemObj, setUpdateItemObj] = useState(null);
+
   const [post, setPost] = useState([
     {
       title: 'SocialNest',
@@ -33,7 +35,7 @@ const App = () => {
   };
 
   const updatePost = (updateItemObj) => {
-    console.log(updateItemObj);
+    setUpdateItemObj(updateItemObj);
   };
 
   return (
@@ -41,7 +43,7 @@ const App = () => {
       <Sidebar />
       <div className="right-contents">
         <Header />
-        <CreatePost createPost={createPost} />
+        <CreatePost createPost={createPost} updateItemObj={updateItemObj} />
         <Card post={post} deletePost={deletePost} updatePost={updatePost} />
         <Footer className="footer" />
       </div>
