@@ -32,13 +32,17 @@ const App = () => {
     setPost(notDeletePosts);
   };
 
+  const updatePost = (updateItemObj) => {
+    console.log(updateItemObj);
+  };
+
   return (
     <div className="app-container">
       <Sidebar />
       <div className="right-contents">
         <Header />
         <CreatePost createPost={createPost} />
-        <Card post={post} deletePost={deletePost} />
+        <Card post={post} deletePost={deletePost} updatePost={updatePost} />
         <Footer className="footer" />
       </div>
     </div>
