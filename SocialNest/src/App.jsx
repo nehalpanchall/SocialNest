@@ -27,13 +27,18 @@ const App = () => {
     titleField.current.focus();
   };
 
+  const deletePost = (deleteItem) => {
+    let notDeletePosts = post.filter((item) => item !== deleteItem);
+    setPost(notDeletePosts);
+  };
+
   return (
     <div className="app-container">
       <Sidebar />
       <div className="right-contents">
         <Header />
         <CreatePost createPost={createPost} />
-        <Card post={post} />
+        <Card post={post} deletePost={deletePost} />
         <Footer className="footer" />
       </div>
     </div>
