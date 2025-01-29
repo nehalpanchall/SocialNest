@@ -10,7 +10,10 @@ const Card = ({ post, deletePost, updatePost }) => {
               <div className="card-body">
                 <h5 className="card-title">{item.title}</h5>
                 <p className="card-text">{item.description}</p>
-                <a className="btn btn-primary" onClick={() => updatePost(item)}>
+                <a
+                  className="btn btn-primary"
+                  onClick={() => updatePost(item, 'create')}
+                >
                   Update
                 </a>
                 <a

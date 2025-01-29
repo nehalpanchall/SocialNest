@@ -36,7 +36,7 @@ const CreatePost = ({ createPost, updateItemObj }) => {
         </div>
 
         <button
-          onClick={() => createPost(title, desc)}
+          onClick={() => createPost(title, desc, 'home')}
           className="btn btn-primary"
         >
           Submit

@@ -19,7 +19,7 @@ const App = () => {
     },
   ]);
 
-  const createPost = (title, desc) => {
+  const createPost = (title, desc, tabValue) => {
     if (updateItemObj) {
       //update
       let prevItems = [...post]; // [{1},{2},{3}]
@@ -32,15 +32,15 @@ const App = () => {
       });
 
       setPost(object);
-      setSelectTab('create');
+
       setUpdateItemObj(null);
     } else {
       //create
       let newItem = { title: title, description: desc };
       let newArr = [newItem, ...post];
       setPost(newArr);
-      setSelectTab('home');
     }
+    setSelectTab(tabValue);
   };
 
   const deletePost = (deleteItem) => {
@@ -48,8 +48,9 @@ const App = () => {
     setPost(notDeletePosts);
   };
 
-  const updatePost = (updateItemObj) => {
+  const updatePost = (updateItemObj, tabValue) => {
     setUpdateItemObj(updateItemObj);
+    setSelectTab(tabValue);
   };
 
   return (
