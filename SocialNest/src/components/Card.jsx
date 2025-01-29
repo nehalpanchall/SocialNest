@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../index.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaPencil } from 'react-icons/fa6';
+import contextObject from './context/postContext';
 
-const Card = ({ post, deletePost, updatePost }) => {
+const Card = ({ deletePost, updatePost }) => {
+  let { post } = useContext(contextObject);
+
   return (
     <>
       {post.map((item, index) => {

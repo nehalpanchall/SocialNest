@@ -5,17 +5,10 @@ import './index.css';
 import CreatePost from './components/CreatePost';
 import Card from './components/Card';
 import { useReducer, useState } from 'react';
+import PostContextProvider from './components/context/PostContextProvider';
 
 function reduce(post, postAction) {
   switch (postAction.type) {
-    case 'ADD_NEW_POST':
-      let addPost = {
-        title: postAction.payload.title,
-        description: postAction.payload.description,
-      };
-      let newPost = [addPost, ...post];
-      return newPost;
-
     case 'UPDATE_POST':
       let prevPost = [...post];
       let updatePost = prevPost.map((item) => {
@@ -67,17 +60,7 @@ const App = () => {
       };
       dispatch(updatePostAction);
       setUpdateItemObj(null);
-    } else {
-      const addPostAction = {
-        type: 'ADD_NEW_POST',
-        payload: {
-          title: title,
-          description: desc,
-        },
-      };
-      dispatch(addPostAction);
     }
-    setSelectTab(tabValue);
   };
 
   const deletePost = (deleteItem) => {
@@ -96,20 +79,22 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
-      <Sidebar selectTab={selectTab} setSelectTab={setSelectTab} />
-      <div className="right-contents">
-        <Header />
+    <PostContextProvider>
+      <div className="app-container">
+        <Sidebar selectTab={selectTab} setSelectTab={setSelectTab} />
+        <div className="right-contents">
+          <Header />
 
-        {selectTab === 'home' ? (
-          <Card post={post} deletePost={deletePost} updatePost={updatePost} />
-        ) : (
-          <CreatePost createPost={createPost} updateItemObj={updateItemObj} />
-        )}
+          {selectTab === 'home' ? (
+            <Card post={post} deletePost={deletePost} updatePost={updatePost} />
+          ) : (
+            <CreatePost createPost={createPost} updateItemObj={updateItemObj} />
+          )}
 
-        <Footer className="footer" />
+          <Footer className="footer" />
+        </div>
       </div>
-    </div>
+    </PostContextProvider>
   );
 };
 
