@@ -6,19 +6,32 @@ import Sidebar from './components/SideBar';
 import './index.css';
 import CreatePost from './components/CreatePost';
 import Card from './components/Card';
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
+
+function reduce(post, postAction) {
+  if (postAction.type === 'ADD_NEW_POST') {
+    let addPost = {
+      title: postAction.payload.title,
+      description: postAction.payload.description,
+    };
+    let newPost = [addPost, ...post];
+    return newPost;
+  }
+}
 
 const App = () => {
   const [updateItemObj, setUpdateItemObj] = useState(null);
 
   const [selectTab, setSelectTab] = useState('home');
 
-  const [post, setPost] = useState([
+  let initialValue = [
     {
       title: 'SocialNest',
       description: 'A social media application to post thread',
     },
-  ]);
+  ];
+
+  const [post, dispatch] = useReducer(reduce, initialValue);
 
   const createPost = (title, desc, tabValue) => {
     if (updateItemObj) {
@@ -36,9 +49,15 @@ const App = () => {
       setUpdateItemObj(null);
     } else {
       //create
-      let newItem = { title: title, description: desc };
-      let newArr = [newItem, ...post];
-      setPost(newArr);
+
+      const addPostAction = {
+        type: 'ADD_NEW_POST',
+        payload: {
+          title: title,
+          description: desc,
+        },
+      };
+      dispatch(addPostAction);
     }
     setSelectTab(tabValue);
   };
