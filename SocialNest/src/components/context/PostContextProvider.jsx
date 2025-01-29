@@ -17,6 +17,20 @@ let reducer = (currPost, action) => {
       let notDeleteItems = currPost.filter((item) => item !== deleteItem);
       return notDeleteItems;
 
+    case 'UPDATE_POST':
+      const { title, description, updateItem } = action.payload;
+      let updatePost = currPost.map((currItem) => {
+        if (currItem === updateItem) {
+          return {
+            title: title,
+            description: description,
+          };
+        } else {
+          return currItem;
+        }
+      });
+      return updatePost;
+
     default:
       return currPost;
   }
@@ -35,16 +49,30 @@ const PostContextProvider = ({ children }) => {
   const [post, dispatchPost] = useReducer(reducer, initialValue);
 
   const createPost = (title, desc, tabValue) => {
-    console.log(title);
-    console.log(desc);
-    let addPostAction = {
-      type: 'ADD_POST',
-      payload: {
-        title: title,
-        description: desc,
-      },
-    };
-    dispatchPost(addPostAction);
+    if (updateItem) {
+      // update existing
+      const updatePostAction = {
+        type: 'UPDATE_POST',
+        payload: {
+          title: title,
+          description: desc,
+          updateItem,
+        },
+      };
+
+      dispatchPost(updatePostAction);
+      setUpdateItem(null);
+    } else {
+      // insert new
+      let addPostAction = {
+        type: 'ADD_POST',
+        payload: {
+          title: title,
+          description: desc,
+        },
+      };
+      dispatchPost(addPostAction);
+    }
   };
 
   const deletePost = (deleteItem) => {

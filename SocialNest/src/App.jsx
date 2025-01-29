@@ -4,63 +4,11 @@ import Sidebar from './components/SideBar';
 import './index.css';
 import CreatePost from './components/CreatePost';
 import Card from './components/Card';
-import { useReducer, useState } from 'react';
+import { useState } from 'react';
 import PostContextProvider from './components/context/PostContextProvider';
 
-function reduce(post, postAction) {
-  switch (postAction.type) {
-    case 'UPDATE_POST':
-      let prevPost = [...post];
-      let updatePost = prevPost.map((item) => {
-        if (item === postAction.payload.updateItemObj) {
-          return {
-            title: postAction.payload.title,
-            description: postAction.payload.description,
-          };
-        } else {
-          return item;
-        }
-      });
-      return updatePost;
-
-    default:
-      return post;
-  }
-}
-
 const App = () => {
-  const [updateItemObj, setUpdateItemObj] = useState(null);
-
   const [selectTab, setSelectTab] = useState('home');
-
-  let initialValue = [
-    {
-      title: 'SocialNest',
-      description: 'A social media application to post thread',
-    },
-  ];
-
-  const [post, dispatch] = useReducer(reduce, initialValue);
-
-  const createPost = (title, desc, tabValue) => {
-    if (updateItemObj) {
-      const updatePostAction = {
-        type: 'UPDATE_POST',
-        payload: {
-          title: title,
-          description: desc,
-          updateItemObj,
-        },
-      };
-      dispatch(updatePostAction);
-      setUpdateItemObj(null);
-    }
-  };
-
-  const updatePost = (updateItemObj, tabValue) => {
-    setUpdateItemObj(updateItemObj);
-    setSelectTab(tabValue);
-  };
 
   return (
     <PostContextProvider>
@@ -69,11 +17,7 @@ const App = () => {
         <div className="right-contents">
           <Header />
 
-          {selectTab === 'home' ? (
-            <Card updatePost={updatePost} />
-          ) : (
-            <CreatePost updateItemObj={updateItemObj} />
-          )}
+          {selectTab === 'home' ? <Card /> : <CreatePost />}
 
           <Footer className="footer" />
         </div>
