@@ -9,31 +9,37 @@ import Card from './components/Card';
 import { useReducer, useState } from 'react';
 
 function reduce(post, postAction) {
-  if (postAction.type === 'ADD_NEW_POST') {
-    let addPost = {
-      title: postAction.payload.title,
-      description: postAction.payload.description,
-    };
-    let newPost = [addPost, ...post];
-    return newPost;
-  } else if (postAction.type === 'UPDATE_POST') {
-    let prevPost = [...post];
-    let updatePost = prevPost.map((item) => {
-      if (item === postAction.payload.updateItemObj) {
-        return {
-          title: postAction.payload.title,
-          description: postAction.payload.description,
-        };
-      } else {
-        return item;
-      }
-    });
-    return updatePost;
-  } else if (postAction.type === 'DELETE_POST') {
-    let notDeleteItems = post.filter(
-      (item) => item !== postAction.payload.deleteItem
-    );
-    return notDeleteItems;
+  switch (postAction.type) {
+    case 'ADD_NEW_POST':
+      let addPost = {
+        title: postAction.payload.title,
+        description: postAction.payload.description,
+      };
+      let newPost = [addPost, ...post];
+      return newPost;
+
+    case 'UPDATE_POST':
+      let prevPost = [...post];
+      let updatePost = prevPost.map((item) => {
+        if (item === postAction.payload.updateItemObj) {
+          return {
+            title: postAction.payload.title,
+            description: postAction.payload.description,
+          };
+        } else {
+          return item;
+        }
+      });
+      return updatePost;
+
+    case 'DELETE_POST':
+      let notDeleteItems = post.filter(
+        (item) => item !== postAction.payload.deleteItem
+      );
+      return notDeleteItems;
+
+    default:
+      return post;
   }
 }
 
