@@ -23,12 +23,6 @@ function reduce(post, postAction) {
       });
       return updatePost;
 
-    case 'DELETE_POST':
-      let notDeleteItems = post.filter(
-        (item) => item !== postAction.payload.deleteItem
-      );
-      return notDeleteItems;
-
     default:
       return post;
   }
@@ -63,16 +57,6 @@ const App = () => {
     }
   };
 
-  const deletePost = (deleteItem) => {
-    const deletePostAction = {
-      type: 'DELETE_POST',
-      payload: {
-        deleteItem,
-      },
-    };
-    dispatch(deletePostAction);
-  };
-
   const updatePost = (updateItemObj, tabValue) => {
     setUpdateItemObj(updateItemObj);
     setSelectTab(tabValue);
@@ -86,9 +70,9 @@ const App = () => {
           <Header />
 
           {selectTab === 'home' ? (
-            <Card post={post} deletePost={deletePost} updatePost={updatePost} />
+            <Card updatePost={updatePost} />
           ) : (
-            <CreatePost createPost={createPost} updateItemObj={updateItemObj} />
+            <CreatePost updateItemObj={updateItemObj} />
           )}
 
           <Footer className="footer" />

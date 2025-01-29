@@ -12,6 +12,11 @@ let reducer = (currPost, action) => {
       let addPost = [newPost, ...currPost];
       return addPost;
 
+    case 'DELETE_POST':
+      let deleteItem = action.payload.deleteItem;
+      let notDeleteItems = currPost.filter((item) => item !== deleteItem);
+      return notDeleteItems;
+
     default:
       return currPost;
   }
@@ -40,9 +45,21 @@ const PostContextProvider = ({ children }) => {
     dispatchPost(addPostAction);
   };
 
+  const deletePost = (deleteItem) => {
+    const deletePostAction = {
+      type: 'DELETE_POST',
+      payload: {
+        deleteItem,
+      },
+    };
+    dispatchPost(deletePostAction);
+  };
+
   return (
     <>
-      <contextObject.Provider value={{ post: post, createPost: createPost }}>
+      <contextObject.Provider
+        value={{ post: post, createPost: createPost, deletePost: deletePost }}
+      >
         {children}
       </contextObject.Provider>
     </>

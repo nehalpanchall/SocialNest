@@ -1,6 +1,8 @@
 import { createContext } from 'react';
 
-const DEFAULT_VALUE = [{ post: [], createPost: () => {} }];
+const DEFAULT_VALUE = [
+  { post: [], createPost: () => {}, deletePost: () => {} },
+];
 
 let contextObject = createContext(DEFAULT_VALUE);
 
