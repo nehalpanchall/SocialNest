@@ -16,6 +16,20 @@ function reduce(post, postAction) {
     };
     let newPost = [addPost, ...post];
     return newPost;
+  } else if (postAction.type === 'UPDATE_POST') {
+    console.log(postAction.payload.updateItemObj);
+    let prevPost = [...post];
+    let updatePost = prevPost.map((item) => {
+      if (item === postAction.payload.updateItemObj) {
+        return {
+          title: postAction.payload.title,
+          description: postAction.payload.description,
+        };
+      } else {
+        return item;
+      }
+    });
+    return updatePost;
   }
 }
 
@@ -35,21 +49,17 @@ const App = () => {
 
   const createPost = (title, desc, tabValue) => {
     if (updateItemObj) {
-      //update
-      let prevItems = [...post]; // [{1},{2},{3}]
-      let object = prevItems.map(function (itemObj) {
-        if (itemObj === updateItemObj) {
-          return { title: title, description: desc };
-        } else {
-          return itemObj;
-        }
-      });
-
-      setPost(object);
+      const updatePostAction = {
+        type: 'UPDATE_POST',
+        payload: {
+          title: title,
+          description: desc,
+          updateItemObj,
+        },
+      };
+      dispatch(updatePostAction);
       setUpdateItemObj(null);
     } else {
-      //create
-
       const addPostAction = {
         type: 'ADD_NEW_POST',
         payload: {
