@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const CreatePost = ({ createPost }) => {
+const CreatePost = ({ createPost, updateItemObj }) => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
+
+  useEffect(() => {
+    if (updateItemObj) {
+      setTitle(updateItemObj.title);
+      setDesc(updateItemObj.description);
+    }
+  }, [updateItemObj]);
 
   return (
     <>

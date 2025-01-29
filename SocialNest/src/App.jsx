@@ -25,7 +25,7 @@ const App = () => {
       let prevItems = [...post]; // [{1},{2},{3}]
       let object = prevItems.map(function (itemObj) {
         if (itemObj === updateItemObj) {
-          return { title: getTitle, description: getDesc };
+          return { title: title, description: desc };
         } else {
           return itemObj;
         }
