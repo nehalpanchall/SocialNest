@@ -10,6 +10,8 @@ import { useState } from 'react';
 const App = () => {
   const [updateItemObj, setUpdateItemObj] = useState(null);
 
+  const [selectTab, setSelectTab] = useState('home');
+
   const [post, setPost] = useState([
     {
       title: 'SocialNest',
@@ -23,7 +25,6 @@ const App = () => {
 
     if (updateItemObj) {
       //update
-
       let prevItems = [...post]; // [{1},{2},{3}]
       let object = prevItems.map(function (itemObj) {
         if (itemObj === updateItemObj) {
@@ -33,20 +34,16 @@ const App = () => {
         }
       });
 
-      //   prevItems = has array of objects: map function on array
-      //   object = has only object
-
       setPost(object);
-
+      setSelectTab('create');
       setUpdateItemObj(null);
     } else {
       //create
       let newItem = { title: getTitle, description: getDesc };
       let newArr = [newItem, ...post];
       setPost(newArr);
+      setSelectTab('home');
     }
-
-    //
 
     titleField.current.value = '';
     descField.current.value = '';
@@ -64,11 +61,16 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar selectTab={selectTab} setSelectTab={setSelectTab} />
       <div className="right-contents">
         <Header />
-        <CreatePost createPost={createPost} updateItemObj={updateItemObj} />
-        <Card post={post} deletePost={deletePost} updatePost={updatePost} />
+
+        {selectTab === 'home' ? (
+          <Card post={post} deletePost={deletePost} updatePost={updatePost} />
+        ) : (
+          <CreatePost createPost={createPost} updateItemObj={updateItemObj} />
+        )}
+
         <Footer className="footer" />
       </div>
     </div>

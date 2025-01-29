@@ -1,6 +1,6 @@
 import { GiNestBirds } from 'react-icons/gi';
 
-const Sidebar = () => {
+const Sidebar = ({ selectTab, setSelectTab }) => {
   return (
     <>
       <div
@@ -22,16 +22,19 @@ const Sidebar = () => {
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
             <a
-              onClick={() => alert()}
+              onClick={() => setSelectTab('home')}
               href="#"
-              className="nav-link active"
+              className={`nav-link ${selectTab === 'home' && 'active'}`}
               aria-current="page"
             >
               Home
             </a>
           </li>
           <li>
-            <a onClick={() => alert()} className="nav-link link-body-emphasis">
+            <a
+              onClick={() => setSelectTab('create')}
+              className={`nav-link ${selectTab === 'create' && 'active'}`}
+            >
               Create Post
             </a>
           </li>

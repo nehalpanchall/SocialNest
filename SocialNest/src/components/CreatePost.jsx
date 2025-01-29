@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const CreatePost = ({ createPost, updateItemObj }) => {
   let titleField = useRef(null);
