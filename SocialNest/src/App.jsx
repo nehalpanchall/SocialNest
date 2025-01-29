@@ -1,5 +1,6 @@
-import Header from './components/Header';
+// Rollback here
 
+import Header from './components/Header';
 import Footer from './components/Footer';
 import Sidebar from './components/SideBar';
 import './index.css';
@@ -32,7 +33,6 @@ const App = () => {
       });
 
       setPost(object);
-
       setUpdateItemObj(null);
     } else {
       //create
