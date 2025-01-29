@@ -4,8 +4,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { FaPencil } from 'react-icons/fa6';
 import contextObject from './context/postContext';
 
-const Card = ({ updatePost }) => {
-  let { post, deletePost } = useContext(contextObject);
+const Card = () => {
+  let { post, deletePost, updatePost } = useContext(contextObject);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import contextObject from './postContext';
 
 let reducer = (currPost, action) => {
@@ -30,6 +30,8 @@ const PostContextProvider = ({ children }) => {
     },
   ];
 
+  const [updateItem, setUpdateItem] = useState(null);
+
   const [post, dispatchPost] = useReducer(reducer, initialValue);
 
   const createPost = (title, desc, tabValue) => {
@@ -55,10 +57,20 @@ const PostContextProvider = ({ children }) => {
     dispatchPost(deletePostAction);
   };
 
+  const updatePost = (updateItem, tabValue) => {
+    setUpdateItem(updateItem);
+  };
+
   return (
     <>
       <contextObject.Provider
-        value={{ post: post, createPost: createPost, deletePost: deletePost }}
+        value={{
+          post: post,
+          createPost: createPost,
+          deletePost: deletePost,
+          updatePost: updatePost,
+          updateItem: updateItem,
+        }}
       >
         {children}
       </contextObject.Provider>

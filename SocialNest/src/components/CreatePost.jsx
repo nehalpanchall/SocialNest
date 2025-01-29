@@ -2,18 +2,18 @@ import { useContext, useEffect, useState } from 'react';
 import '../index.css';
 import contextObject from './context/postContext';
 
-const CreatePost = ({ updateItemObj }) => {
-  let { createPost } = useContext(contextObject);
+const CreatePost = () => {
+  let { createPost, updateItem } = useContext(contextObject);
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
 
   useEffect(() => {
-    if (updateItemObj) {
-      setTitle(updateItemObj.title);
-      setDesc(updateItemObj.description);
+    if (updateItem) {
+      setTitle(updateItem.title);
+      setDesc(updateItem.description);
     }
-  }, [updateItemObj]);
+  }, [updateItem]);
 
   return (
     <>
