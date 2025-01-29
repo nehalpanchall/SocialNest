@@ -17,7 +17,6 @@ function reduce(post, postAction) {
     let newPost = [addPost, ...post];
     return newPost;
   } else if (postAction.type === 'UPDATE_POST') {
-    console.log(postAction.payload.updateItemObj);
     let prevPost = [...post];
     let updatePost = prevPost.map((item) => {
       if (item === postAction.payload.updateItemObj) {
@@ -30,6 +29,11 @@ function reduce(post, postAction) {
       }
     });
     return updatePost;
+  } else if (postAction.type === 'DELETE_POST') {
+    let notDeleteItems = post.filter(
+      (item) => item !== postAction.payload.deleteItem
+    );
+    return notDeleteItems;
   }
 }
 
@@ -73,8 +77,13 @@ const App = () => {
   };
 
   const deletePost = (deleteItem) => {
-    let notDeletePosts = post.filter((item) => item !== deleteItem);
-    setPost(notDeletePosts);
+    const deletePostAction = {
+      type: 'DELETE_POST',
+      payload: {
+        deleteItem,
+      },
+    };
+    dispatch(deletePostAction);
   };
 
   const updatePost = (updateItemObj, tabValue) => {
