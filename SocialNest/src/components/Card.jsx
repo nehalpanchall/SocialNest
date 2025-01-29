@@ -1,30 +1,34 @@
 import React from 'react';
+import '../index.css';
+import { FaTrashAlt } from 'react-icons/fa';
+import { FaPencil } from 'react-icons/fa6';
 
 const Card = ({ post, deletePost, updatePost }) => {
   return (
     <>
       {post.map((item, index) => {
         return (
-          <React.Fragment key={item + index}>
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{item.title}</h5>
-                <p className="card-text">{item.description}</p>
-                <a
-                  className="btn btn-primary"
+          <div className="card" key={item + index}>
+            <div className="card-body">
+              <h5 className="card-title">{item.title}</h5>
+              <hr></hr>
+              <p className="card-text">{item.description}</p>
+              <div className="button-container">
+                <button
+                  className="btn btn-update"
                   onClick={() => updatePost(item, 'create')}
                 >
-                  Update
-                </a>
-                <a
-                  className="btn btn-danger delete-btn"
+                  <FaPencil />
+                </button>
+                <button
+                  className="btn btn-delete"
                   onClick={() => deletePost(item)}
                 >
-                  Delete
-                </a>
+                  <FaTrashAlt />
+                </button>
               </div>
             </div>
-          </React.Fragment>
+          </div>
         );
       })}
     </>

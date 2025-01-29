@@ -12,24 +12,95 @@
 }
 
 .post-container {
-  padding: 50px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  margin-left: 50px;
 }
 
-.input-width {
-  width: 30%;
-}
-
-.card {
-  margin: 50px;
-  padding: 30px;
-  width: 30%;
-}
-
-.delete-btn {
-  margin-left: 20px;
+.form-post {
+  background: #f3f6f6; /* White card-like background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow */
+  width: 100%;
+  max-width: 400px;
 }
 
 .footer {
   position: fixed;
   bottom: 0;
+}
+
+.card {
+  position: relative; /* Allow absolute positioning of the buttons */
+  margin: 30px;
+  padding: 20px;
+  width: 30%;
+  border-radius: 8px;
+  border: 1px solid black;
+}
+
+.card-body {
+  position: relative;
+  padding: 45px 45px;
+  margin: -37px;
+  margin-right: -10px;
+}
+
+.card-text {
+  color: rgb(57, 67, 77);
+}
+
+.card-title {
+  color: red;
+}
+
+.button-container {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  gap: 5px;
+}
+
+.button-submit {
+  display: inline-block;
+  padding: 7px 15px;
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn {
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  background-color: #007bff; /* Blue color for buttons */
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: #f44336;
+}
+
+.btn:hover {
+  background-color: #007bff;
+}
+
+.btn-delete:hover {
+  background-color: #f44336;
 }
