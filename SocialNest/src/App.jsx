@@ -19,10 +19,7 @@ const App = () => {
     },
   ]);
 
-  const createPost = (titleField, descField) => {
-    let getTitle = titleField.current.value;
-    let getDesc = descField.current.value;
-
+  const createPost = (title, desc) => {
     if (updateItemObj) {
       //update
       let prevItems = [...post]; // [{1},{2},{3}]
@@ -39,15 +36,11 @@ const App = () => {
       setUpdateItemObj(null);
     } else {
       //create
-      let newItem = { title: getTitle, description: getDesc };
+      let newItem = { title: title, description: desc };
       let newArr = [newItem, ...post];
       setPost(newArr);
       setSelectTab('home');
     }
-
-    titleField.current.value = '';
-    descField.current.value = '';
-    titleField.current.focus();
   };
 
   const deletePost = (deleteItem) => {
