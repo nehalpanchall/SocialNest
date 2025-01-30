@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import contextObject from './components/context/postContext';
 import Card from './components/Card';
 import CreatePost from './components/CreatePost';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (

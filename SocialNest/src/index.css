@@ -28,6 +28,13 @@
   max-width: 400px;
 }
 
+.hero {
+  margin: 50px 100px;
+
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
