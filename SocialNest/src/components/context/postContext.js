@@ -7,6 +7,8 @@ const DEFAULT_VALUE = [
     deletePost: () => {},
     updatePost: () => {},
     updateItem: [],
+    selectTab: '',
+    setSelectTab: () => {},
   },
 ];
 

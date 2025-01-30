@@ -1,5 +1,7 @@
 import { useReducer, useState } from 'react';
 import contextObject from './postContext';
+import CreatePost from '../CreatePost';
+import Card from '../Card';
 
 let reducer = (currPost, action) => {
   switch (action.type) {
@@ -48,6 +50,8 @@ const PostContextProvider = ({ children }) => {
 
   const [post, dispatchPost] = useReducer(reducer, initialValue);
 
+  const [selectTab, setSelectTab] = useState('home');
+
   const createPost = (title, desc, tabValue) => {
     if (updateItem) {
       // update existing
@@ -73,6 +77,8 @@ const PostContextProvider = ({ children }) => {
       };
       dispatchPost(addPostAction);
     }
+
+    setSelectTab(tabValue);
   };
 
   const deletePost = (deleteItem) => {
@@ -87,6 +93,7 @@ const PostContextProvider = ({ children }) => {
 
   const updatePost = (updateItem, tabValue) => {
     setUpdateItem(updateItem);
+    setSelectTab(tabValue);
   };
 
   return (
@@ -98,6 +105,8 @@ const PostContextProvider = ({ children }) => {
           deletePost: deletePost,
           updatePost: updatePost,
           updateItem: updateItem,
+          selectTab,
+          setSelectTab,
         }}
       >
         {children}

@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { GiNestBirds } from 'react-icons/gi';
+import contextObject from './context/postContext';
 
-const Sidebar = ({ selectTab, setSelectTab }) => {
+const Sidebar = () => {
+  let { selectTab, setSelectTab } = useContext(contextObject);
   return (
     <>
       <div
