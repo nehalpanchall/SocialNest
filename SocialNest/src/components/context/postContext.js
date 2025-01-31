@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 
 const DEFAULT_VALUE = [
   {
@@ -12,10 +12,17 @@ const DEFAULT_VALUE = [
   },
 ];
 
+// create context object
 let contextObject = createContext(DEFAULT_VALUE);
 
+// create Provider
 let ContextProvider = contextObject.Provider;
+
+// custom hook
+function usePostContext() {
+  return useContext(contextObject);
+}
 
 export default contextObject;
 
-export { ContextProvider };
+export { ContextProvider, usePostContext };

@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../index.css';
-import contextObject from './context/postContext';
+import { usePostContext } from './context/postContext';
 
 const CreatePost = () => {
-  let { createPost, updateItem } = useContext(contextObject);
+  // let { createPost, updateItem } = useContext(contextObject);
+  let { createPost, updateItem } = usePostContext();
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
