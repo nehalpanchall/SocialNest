@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useCallback, useReducer, useState } from 'react';
 import contextObject from './postContext';
 import CreatePost from '../CreatePost';
 import Card from '../Card';
@@ -52,49 +52,57 @@ const PostContextProvider = ({ children }) => {
 
   const [selectTab, setSelectTab] = useState('home');
 
-  const createPost = (title, desc, tabValue) => {
-    if (updateItem) {
-      // update existing
-      const updatePostAction = {
-        type: 'UPDATE_POST',
+  const createPost = useCallback(
+    (title, desc, tabValue) => {
+      if (updateItem) {
+        // update existing
+        const updatePostAction = {
+          type: 'UPDATE_POST',
+          payload: {
+            title: title,
+            description: desc,
+            updateItem,
+          },
+        };
+
+        dispatchPost(updatePostAction);
+        setUpdateItem(null);
+      } else {
+        // insert new
+        let addPostAction = {
+          type: 'ADD_POST',
+          payload: {
+            title: title,
+            description: desc,
+          },
+        };
+        dispatchPost(addPostAction);
+      }
+      setSelectTab(tabValue);
+    },
+    [dispatchPost, updateItem, setSelectTab]
+  );
+
+  const deletePost = useCallback(
+    (deleteItem) => {
+      const deletePostAction = {
+        type: 'DELETE_POST',
         payload: {
-          title: title,
-          description: desc,
-          updateItem,
+          deleteItem,
         },
       };
+      dispatchPost(deletePostAction);
+    },
+    [dispatchPost]
+  );
 
-      dispatchPost(updatePostAction);
-      setUpdateItem(null);
-    } else {
-      // insert new
-      let addPostAction = {
-        type: 'ADD_POST',
-        payload: {
-          title: title,
-          description: desc,
-        },
-      };
-      dispatchPost(addPostAction);
-    }
-
-    setSelectTab(tabValue);
-  };
-
-  const deletePost = (deleteItem) => {
-    const deletePostAction = {
-      type: 'DELETE_POST',
-      payload: {
-        deleteItem,
-      },
-    };
-    dispatchPost(deletePostAction);
-  };
-
-  const updatePost = (updateItem, tabValue) => {
-    setUpdateItem(updateItem);
-    setSelectTab(tabValue);
-  };
+  const updatePost = useCallback(
+    (updateItem, tabValue) => {
+      setUpdateItem(updateItem);
+      setSelectTab(tabValue);
+    },
+    [updateItem, setSelectTab]
+  );
 
   return (
     <>
