@@ -14,4 +14,8 @@ const DEFAULT_VALUE = [
 
 let contextObject = createContext(DEFAULT_VALUE);
 
+let ContextProvider = contextObject.Provider;
+
 export default contextObject;
+
+export { ContextProvider };

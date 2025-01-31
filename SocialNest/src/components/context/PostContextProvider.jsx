@@ -1,7 +1,5 @@
 import { useCallback, useReducer, useState } from 'react';
-import contextObject from './postContext';
-import CreatePost from '../CreatePost';
-import Card from '../Card';
+import { ContextProvider } from './postContext';
 
 let reducer = (currPost, action) => {
   switch (action.type) {
@@ -106,7 +104,7 @@ const PostContextProvider = ({ children }) => {
 
   return (
     <>
-      <contextObject.Provider
+      <ContextProvider
         value={{
           post: post,
           createPost: createPost,
@@ -118,7 +116,7 @@ const PostContextProvider = ({ children }) => {
         }}
       >
         {children}
-      </contextObject.Provider>
+      </ContextProvider>
     </>
   );
 };
