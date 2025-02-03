@@ -4,9 +4,11 @@ import { ContextProvider } from './postContext';
 let reducer = (currPost, action) => {
   switch (action.type) {
     case 'ADD_POST':
+      let tagsArr = action.payload.tags.split(',');
       let newPost = {
         title: action.payload.title,
         description: action.payload.description,
+        tags: tagsArr,
       };
 
       let addPost = [newPost, ...currPost];
@@ -18,12 +20,14 @@ let reducer = (currPost, action) => {
       return notDeleteItems;
 
     case 'UPDATE_POST':
-      const { title, description, updateItem } = action.payload;
+      const { title, description, tags, updateItem } = action.payload;
+      let updateTags = tags.split(',');
       let updatePost = currPost.map((currItem) => {
         if (currItem === updateItem) {
           return {
             title: title,
             description: description,
+            tags: updateTags,
           };
         } else {
           return currItem;
@@ -39,8 +43,18 @@ let reducer = (currPost, action) => {
 const PostContextProvider = ({ children }) => {
   let initialValue = [
     {
+      id: 1,
       title: 'SocialNest',
+      reactions: 4,
       description: 'A social media application to post thread',
+      tags: ['Tranding', 'Wonderlust', 'Likes'],
+    },
+    {
+      id: 2,
+      title: 'Travel Diaries',
+      reactions: 6,
+      description: 'Travelling to New York',
+      tags: ['Explore', 'Fun', 'Foods'],
     },
   ];
 
@@ -51,7 +65,8 @@ const PostContextProvider = ({ children }) => {
   const [selectTab, setSelectTab] = useState('home');
 
   const createPost = useCallback(
-    (title, desc, tabValue) => {
+    (title, desc, tags, tabValue) => {
+      console.log(tags);
       if (updateItem) {
         // update existing
         const updatePostAction = {
@@ -59,6 +74,7 @@ const PostContextProvider = ({ children }) => {
           payload: {
             title: title,
             description: desc,
+            tags: tags,
             updateItem,
           },
         };
@@ -72,6 +88,7 @@ const PostContextProvider = ({ children }) => {
           payload: {
             title: title,
             description: desc,
+            tags: tags,
           },
         };
         dispatchPost(addPostAction);
@@ -96,6 +113,7 @@ const PostContextProvider = ({ children }) => {
 
   const updatePost = useCallback(
     (updateItem, tabValue) => {
+      console.log(updateItem);
       setUpdateItem(updateItem);
       setSelectTab(tabValue);
     },

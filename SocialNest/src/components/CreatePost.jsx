@@ -8,11 +8,13 @@ const CreatePost = () => {
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
+  const [tags, setTags] = useState('');
 
   useEffect(() => {
     if (updateItem) {
       setTitle(updateItem.title);
       setDesc(updateItem.description);
+      setTags(updateItem.tags.join(', '));
     }
   }, [updateItem]);
 
@@ -27,7 +29,6 @@ const CreatePost = () => {
               onChange={(e) => setTitle(e.target.value)}
               type="text"
               className="form-control input-width"
-              aria-describedby="emailHelp"
             />
           </div>
           <div className="mb-3">
@@ -40,9 +41,17 @@ const CreatePost = () => {
               className="form-control input-width textarea"
             />
           </div>
+          <label className="form-label">Tags</label>
+          <input
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            type="text"
+            placeholder="Travel, Food, Explore, etc.."
+            className="form-control input-width"
+          />
 
           <button
-            onClick={() => createPost(title, desc, 'home')}
+            onClick={() => createPost(title, desc, tags, 'home')}
             className="button-submit"
           >
             Submit

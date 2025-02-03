@@ -20,6 +20,13 @@ const Card = () => {
               <h5 className="card-title">{item.title}</h5>
               <hr></hr>
               <p className="card-text">{item.description}</p>
+
+              {item.tags.map((tag) => (
+                <span key={tag} className="badge text-bg-primary tags">
+                  #{tag}
+                </span>
+              ))}
+
               <div className="button-container">
                 <button
                   className="btn btn-update"
