@@ -6,6 +6,7 @@ let reducer = (currPost, action) => {
     case 'ADD_POST':
       let tagsArr = action.payload.tags.split(',');
       let newPost = {
+        id: action.payload.id,
         title: action.payload.title,
         description: action.payload.description,
         tags: tagsArr,
@@ -25,6 +26,7 @@ let reducer = (currPost, action) => {
       let updatePost = currPost.map((currItem) => {
         if (currItem === updateItem) {
           return {
+            id: updateItem.id,
             title: title,
             description: description,
             tags: updateTags,
@@ -58,6 +60,8 @@ const PostContextProvider = ({ children }) => {
     },
   ];
 
+  const [id, setId] = useState(2);
+
   const [updateItem, setUpdateItem] = useState(null);
 
   const [post, dispatchPost] = useReducer(reducer, initialValue);
@@ -66,7 +70,6 @@ const PostContextProvider = ({ children }) => {
 
   const createPost = useCallback(
     (title, desc, tags, tabValue) => {
-      console.log(tags);
       if (updateItem) {
         // update existing
         const updatePostAction = {
@@ -83,15 +86,22 @@ const PostContextProvider = ({ children }) => {
         setUpdateItem(null);
       } else {
         // insert new
-        let addPostAction = {
-          type: 'ADD_POST',
-          payload: {
-            title: title,
-            description: desc,
-            tags: tags,
-          },
-        };
-        dispatchPost(addPostAction);
+        setId((prevId) => {
+          let newId = prevId + 1;
+          const addPostAction = {
+            type: 'ADD_POST',
+            payload: {
+              id: newId, // Generate dynamic Id for new object
+              title: title,
+              description: desc,
+              tags: tags,
+            },
+          };
+          dispatchPost(addPostAction);
+
+          // Return the updated ID for next use
+          return newId;
+        });
       }
       setSelectTab(tabValue);
     },
@@ -113,7 +123,6 @@ const PostContextProvider = ({ children }) => {
 
   const updatePost = useCallback(
     (updateItem, tabValue) => {
-      console.log(updateItem);
       setUpdateItem(updateItem);
       setSelectTab(tabValue);
     },

@@ -18,6 +18,7 @@ const Card = () => {
           <div className="card" key={item + index}>
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
+              <span>Id: {item.id}</span>
               <hr></hr>
               <p className="card-text">{item.description}</p>
 
