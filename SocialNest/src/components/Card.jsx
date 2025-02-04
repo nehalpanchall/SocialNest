@@ -9,9 +9,17 @@ const Card = () => {
   // let { post, deletePost, updatePost } = useContext(contextObject);
   let { post, deletePost, updatePost } = usePostContext();
 
+  const POST_API = 'https://dummyjson.com/products';
+
+  const dataFetched = () => {
+    fetch(POST_API)
+      .then((res) => res.json())
+      .then((data) => console.log(data.products));
+  };
+
   return (
     <>
-      {post.length === 0 && <EmptyMessage />}
+      {post.length === 0 && <EmptyMessage dataFetched={dataFetched} />}
 
       {post.map((item, index) => {
         return (

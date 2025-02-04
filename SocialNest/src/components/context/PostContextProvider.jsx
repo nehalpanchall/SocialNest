@@ -43,22 +43,7 @@ let reducer = (currPost, action) => {
 };
 
 const PostContextProvider = ({ children }) => {
-  let initialValue = [
-    {
-      id: 1,
-      title: 'SocialNest',
-      reactions: 4,
-      description: 'A social media application to post thread',
-      tags: ['Tranding', 'Wonderlust', 'Likes'],
-    },
-    {
-      id: 2,
-      title: 'Travel Diaries',
-      reactions: 6,
-      description: 'Travelling to New York',
-      tags: ['Explore', 'Fun', 'Foods'],
-    },
-  ];
+  let initialValue = [];
 
   const [id, setId] = useState(2);
 

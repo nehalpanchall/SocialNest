@@ -1,4 +1,4 @@
-const EmptyMessage = () => {
+const EmptyMessage = ({ dataFetched }) => {
   return (
     <>
       <div className="bg-light text-secondary  text-center hero">
@@ -8,6 +8,7 @@ const EmptyMessage = () => {
             <p className="fs-5 mb-4">
               Add new if you want to see feeds on your profile.
             </p>
+            <button onClick={dataFetched}>Fetch data from server</button>
           </div>
         </div>
       </div>
