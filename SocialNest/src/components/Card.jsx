@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../index.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaPencil } from 'react-icons/fa6';
@@ -11,15 +11,15 @@ const Card = () => {
 
   const POST_API = 'https://dummyjson.com/products';
 
-  const dataFetched = () => {
+  useEffect(() => {
     fetch(POST_API)
       .then((res) => res.json())
       .then((data) => fetchPost(data.products));
-  };
+  }, []);
 
   return (
     <>
-      {post.length === 0 && <EmptyMessage dataFetched={dataFetched} />}
+      {post.length === 0 && <EmptyMessage />}
 
       {post.map((item, index) => {
         return (
