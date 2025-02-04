@@ -15,12 +15,21 @@ const Card = () => {
   const POST_API = 'https://dummyjson.com/products';
 
   useEffect(() => {
-    fetch(POST_API)
+    let controller = new AbortController();
+    let signal = controller.signal;
+
+    fetch(POST_API, { signal })
       .then((res) => res.json())
       .then((data) => {
         fetchPost(data.products);
         setLoadPost(false);
       });
+
+    // Clean up function
+    return () => {
+      controller.abort();
+      console.log('fetch() function cleaned up!');
+    };
   }, []);
 
   return (
