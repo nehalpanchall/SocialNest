@@ -8,7 +8,6 @@ const EmptyMessage = () => {
             <p className="fs-5 mb-4">
               Add new if you want to see feeds on your profile.
             </p>
-            <button>Fetch data from server</button>
           </div>
         </div>
       </div>
