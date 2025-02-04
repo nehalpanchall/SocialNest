@@ -7,14 +7,14 @@ import EmptyMessage from './EmptyMessage';
 
 const Card = () => {
   // let { post, deletePost, updatePost } = useContext(contextObject);
-  let { post, deletePost, updatePost } = usePostContext();
+  let { post, deletePost, updatePost, fetchPost } = usePostContext();
 
   const POST_API = 'https://dummyjson.com/products';
 
   const dataFetched = () => {
     fetch(POST_API)
       .then((res) => res.json())
-      .then((data) => console.log(data.products));
+      .then((data) => fetchPost(data.products));
   };
 
   return (

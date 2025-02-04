@@ -9,6 +9,7 @@ const DEFAULT_VALUE = [
     updateItem: [],
     selectTab: '',
     setSelectTab: () => {},
+    fetchPost: () => {},
   },
 ];
 

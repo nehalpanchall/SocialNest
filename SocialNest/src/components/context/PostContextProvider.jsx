@@ -20,6 +20,10 @@ let reducer = (currPost, action) => {
       let notDeleteItems = currPost.filter((item) => item !== deleteItem);
       return notDeleteItems;
 
+    case 'FETCH_POSTS':
+      currPost = action.payload.postsList;
+      return currPost;
+
     case 'UPDATE_POST':
       const { title, description, tags, updateItem } = action.payload;
       let updateTags = tags.split(',');
@@ -114,6 +118,16 @@ const PostContextProvider = ({ children }) => {
     [updateItem, setSelectTab]
   );
 
+  const fetchPost = (postsList) => {
+    const fetchPostsAction = {
+      type: 'FETCH_POSTS',
+      payload: {
+        postsList,
+      },
+    };
+    dispatchPost(fetchPostsAction);
+  };
+
   return (
     <>
       <ContextProvider
@@ -125,6 +139,7 @@ const PostContextProvider = ({ children }) => {
           updateItem: updateItem,
           selectTab,
           setSelectTab,
+          fetchPost,
         }}
       >
         {children}
