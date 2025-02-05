@@ -8,29 +8,7 @@ import LoadingPosts from './LoadingPosts';
 
 const Card = () => {
   // let { post, deletePost, updatePost } = useContext(contextObject);
-  let { post, deletePost, updatePost, fetchPost } = usePostContext();
-
-  const [loadPost, setLoadPost] = useState(true);
-
-  const POST_API = 'https://dummyjson.com/products';
-
-  useEffect(() => {
-    let controller = new AbortController();
-    let signal = controller.signal;
-
-    fetch(POST_API, { signal })
-      .then((res) => res.json())
-      .then((data) => {
-        fetchPost(data.products);
-        setLoadPost(false);
-      });
-
-    // Clean up function
-    return () => {
-      controller.abort();
-      console.log('fetch() function cleaned up!');
-    };
-  }, []);
+  let { post, deletePost, updatePost, loadPost } = usePostContext();
 
   return (
     <>

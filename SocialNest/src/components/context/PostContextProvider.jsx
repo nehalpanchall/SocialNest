@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { ContextProvider } from './postContext';
 
 let reducer = (currPost, action) => {
@@ -128,6 +128,27 @@ const PostContextProvider = ({ children }) => {
     dispatchPost(fetchPostsAction);
   };
 
+  const [loadPost, setLoadPost] = useState(true);
+
+  const POST_API = 'https://dummyjson.com/products';
+
+  useEffect(() => {
+    let controller = new AbortController();
+    let signal = controller.signal;
+
+    fetch(POST_API, { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        fetchPost(data.products);
+        setLoadPost(false);
+      });
+
+    // Clean up function
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
   return (
     <>
       <ContextProvider
@@ -139,7 +160,7 @@ const PostContextProvider = ({ children }) => {
           updateItem: updateItem,
           selectTab,
           setSelectTab,
-          fetchPost,
+          loadPost,
         }}
       >
         {children}
