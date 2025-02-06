@@ -1,6 +1,6 @@
 import { GiNestBirds } from 'react-icons/gi';
 import { usePostContext } from './context/postContext';
-
+import { Link } from 'react-router-dom';
 const Sidebar = () => {
   // let { selectTab, setSelectTab } = useContext(contextObject);
   let { selectTab, setSelectTab } = usePostContext();
@@ -25,22 +25,23 @@ const Sidebar = () => {
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
-            <a
+            <Link
+              to="/"
               onClick={() => setSelectTab('home')}
-              href="#"
               className={`nav-link ${selectTab === 'home' && 'active'}`}
               aria-current="page"
             >
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
+              to="/create"
               onClick={() => setSelectTab('create')}
               className={`nav-link ${selectTab === 'create' && 'active'}`}
             >
-              Create Post
-            </a>
+              Add Post
+            </Link>
           </li>
         </ul>
         <hr />

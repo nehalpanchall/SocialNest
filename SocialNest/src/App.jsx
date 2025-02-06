@@ -10,6 +10,8 @@ import Card from './components/Card';
 import CreatePost from './components/CreatePost';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { Outlet } from 'react-router-dom';
+
 const App = () => {
   return (
     <PostContextProvider>
@@ -17,7 +19,7 @@ const App = () => {
         <Sidebar />
         <div className="right-contents">
           <Header />
-          <MainContent />
+          <Outlet />
           <Footer className="footer" />
         </div>
       </div>
