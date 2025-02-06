@@ -4,11 +4,11 @@ import { ContextProvider } from './postContext';
 let reducer = (currPost, action) => {
   switch (action.type) {
     case 'ADD_POST':
-      let tagsArr = action.payload.tags.split(',');
+      let tagsArr = action.payload.APIPost.tags.split(', ');
       let newPost = {
-        id: action.payload.id,
-        title: action.payload.title,
-        description: action.payload.description,
+        id: action.payload.APIPost.userId,
+        title: action.payload.APIPost.title,
+        description: action.payload.APIPost.body,
         tags: tagsArr,
       };
 
@@ -58,7 +58,7 @@ const PostContextProvider = ({ children }) => {
   const [selectTab, setSelectTab] = useState('home');
 
   const createPost = useCallback(
-    (title, desc, tags, tabValue) => {
+    (APIPost, tabValue) => {
       if (updateItem) {
         // update existing
         const updatePostAction = {
@@ -74,16 +74,14 @@ const PostContextProvider = ({ children }) => {
         dispatchPost(updatePostAction);
         setUpdateItem(null);
       } else {
+        console.log(tabValue);
         // insert new
         setId((prevId) => {
           let newId = prevId + 1;
           const addPostAction = {
             type: 'ADD_POST',
             payload: {
-              id: newId, // Generate dynamic Id for new object
-              title: title,
-              description: desc,
-              tags: tags,
+              APIPost,
             },
           };
           dispatchPost(addPostAction);
@@ -144,9 +142,6 @@ const PostContextProvider = ({ children }) => {
       });
 
     // Clean up function
-    return () => {
-      controller.abort();
-    };
   }, []);
 
   return (

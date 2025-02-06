@@ -10,6 +10,28 @@ const CreatePost = () => {
   const [desc, setDesc] = useState('');
   const [tags, setTags] = useState('');
 
+  const postAPI = (e) => {
+    e.preventDefault();
+
+    const ADD_URL = 'https://dummyjson.com/posts/add';
+
+    let promiseX = fetch(ADD_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: 6,
+        title: title,
+        body: desc,
+        tags: tags,
+      }),
+    });
+    promiseX.then((res) => res.json()).then((data) => createPost(data, 'home'));
+
+    setTitle('');
+    setDesc('');
+    setTags('');
+  };
+
   useEffect(() => {
     if (updateItem) {
       setTitle(updateItem.title);
@@ -21,7 +43,7 @@ const CreatePost = () => {
   return (
     <>
       <div className="post-container">
-        <form className="form-post">
+        <form className="form-post" onSubmit={postAPI}>
           <div className="mb-3 ">
             <label className="form-label">Post Title</label>
             <input
@@ -50,12 +72,7 @@ const CreatePost = () => {
             className="form-control input-width"
           />
 
-          <button
-            onClick={() => createPost(title, desc, tags, 'home')}
-            className="button-submit"
-          >
-            Submit
-          </button>
+          <button className="button-submit">Submit</button>
         </form>
       </div>
     </>
