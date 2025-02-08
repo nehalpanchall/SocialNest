@@ -54,6 +54,7 @@ const PostContextProvider = ({ children }) => {
   const [id, setId] = useState(2);
 
   const [updateItem, setUpdateItem] = useState(null);
+
   const navigate = useNavigate();
 
   const [post, dispatchPost] = useReducer(reducer, initialValue);
@@ -112,7 +113,7 @@ const PostContextProvider = ({ children }) => {
   const updatePost = useCallback(
     (updateItem, tabValue) => {
       setUpdateItem(updateItem);
-      navigate('/create');
+      navigate(`/${tabValue}`); // navigate('/create')
       setSelectTab(tabValue);
     },
     [updateItem, setSelectTab]
