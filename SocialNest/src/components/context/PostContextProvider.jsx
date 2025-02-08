@@ -25,14 +25,15 @@ let reducer = (currPost, action) => {
       return currPost;
 
     case 'UPDATE_POST':
-      const { title, description, tags, updateItem } = action.payload;
+      const { title, body, tags } = action.payload.APIPost;
+      const { updateItem } = action.payload;
       let updateTags = tags.split(',');
       let updatePost = currPost.map((currItem) => {
         if (currItem === updateItem) {
           return {
             id: updateItem.id,
             title: title,
-            description: description,
+            description: body,
             tags: updateTags,
           };
         } else {
@@ -64,9 +65,7 @@ const PostContextProvider = ({ children }) => {
         const updatePostAction = {
           type: 'UPDATE_POST',
           payload: {
-            title: title,
-            description: desc,
-            tags: tags,
+            APIPost,
             updateItem,
           },
         };

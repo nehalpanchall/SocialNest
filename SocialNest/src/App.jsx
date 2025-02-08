@@ -19,8 +19,7 @@ const App = () => {
         <Sidebar />
         <div className="right-contents">
           <Header />
-          {/* <Outlet /> */}
-
+          <Outlet />
           <Footer className="footer" />
         </div>
       </div>
