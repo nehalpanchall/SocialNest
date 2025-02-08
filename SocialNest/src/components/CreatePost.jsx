@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import '../index.css';
 import { usePostContext } from './context/postContext';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
   // let { createPost, updateItem } = useContext(contextObject);
   let { createPost, updateItem } = usePostContext();
+
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -30,6 +33,7 @@ const CreatePost = () => {
     setTitle('');
     setDesc('');
     setTags('');
+    navigate('/');
   };
 
   useEffect(() => {

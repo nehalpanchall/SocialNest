@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { ContextProvider } from './postContext';
+import { useNavigate } from 'react-router-dom';
 
 let reducer = (currPost, action) => {
   switch (action.type) {
@@ -53,6 +54,7 @@ const PostContextProvider = ({ children }) => {
   const [id, setId] = useState(2);
 
   const [updateItem, setUpdateItem] = useState(null);
+  const navigate = useNavigate();
 
   const [post, dispatchPost] = useReducer(reducer, initialValue);
 
@@ -110,6 +112,7 @@ const PostContextProvider = ({ children }) => {
   const updatePost = useCallback(
     (updateItem, tabValue) => {
       setUpdateItem(updateItem);
+      navigate('/create');
       setSelectTab(tabValue);
     },
     [updateItem, setSelectTab]
