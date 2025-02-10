@@ -21,7 +21,5 @@ const routes = [
 const routerX = createBrowserRouter(routes);
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={routerX} />
-  </StrictMode>
+  <RouterProvider router={routerX} />
 );

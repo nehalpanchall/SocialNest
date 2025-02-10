@@ -2,6 +2,8 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import { ContextProvider } from './postContext';
 import { useNavigate } from 'react-router-dom';
 
+import axios from 'axios';
+
 let reducer = (currPost, action) => {
   switch (action.type) {
     case 'ADD_POST':
@@ -134,17 +136,11 @@ const PostContextProvider = ({ children }) => {
   const POST_API = 'https://dummyjson.com/products';
 
   useEffect(() => {
-    let controller = new AbortController();
-    let signal = controller.signal;
-
-    fetch(POST_API, { signal })
-      .then((res) => res.json())
-      .then((data) => {
-        fetchPost(data.products);
-        setLoadPost(false);
-      });
-
-    // Clean up function
+    (async () => {
+      let axiosX = await axios.get(POST_API);
+      setLoadPost(false);
+      fetchPost(axiosX.data.products);
+    })();
   }, []);
 
   return (
