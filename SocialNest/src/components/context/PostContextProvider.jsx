@@ -138,11 +138,14 @@ const PostContextProvider = ({ children }) => {
   const POST_API = 'https://dummyjson.com/products';
 
   useEffect(() => {
+    let controller = new AbortController();
+    let signal = controller.signal;
+
     (async () => {
       try {
         setLoadPost(true);
         setError(false);
-        let res = await axios.get(POST_API);
+        let res = await axios.get(POST_API, { signal });
         setLoadPost(false);
         fetchPost(res.data.products);
       } catch (error) {
@@ -150,6 +153,10 @@ const PostContextProvider = ({ children }) => {
         setError(true);
       }
     })();
+
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   return (
