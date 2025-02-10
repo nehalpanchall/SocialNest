@@ -131,15 +131,24 @@ const PostContextProvider = ({ children }) => {
     dispatchPost(fetchPostsAction);
   };
 
-  const [loadPost, setLoadPost] = useState(true);
+  const [loadPost, setLoadPost] = useState(false);
+
+  const [error, setError] = useState(false);
 
   const POST_API = 'https://dummyjson.com/products';
 
   useEffect(() => {
     (async () => {
-      let axiosX = await axios.get(POST_API);
-      setLoadPost(false);
-      fetchPost(axiosX.data.products);
+      try {
+        setLoadPost(true);
+        setError(false);
+        let res = await axios.get(POST_API);
+        setLoadPost(false);
+        fetchPost(res.data.products);
+      } catch (error) {
+        setLoadPost(false);
+        setError(true);
+      }
     })();
   }, []);
 
@@ -155,6 +164,7 @@ const PostContextProvider = ({ children }) => {
           selectTab,
           setSelectTab,
           loadPost,
+          error,
         }}
       >
         {children}

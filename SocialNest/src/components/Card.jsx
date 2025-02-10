@@ -8,13 +8,15 @@ import LoadingPosts from './LoadingPosts';
 
 const Card = () => {
   // let { post, deletePost, updatePost } = useContext(contextObject);
-  let { post, deletePost, updatePost, loadPost } = usePostContext();
+  let { post, deletePost, updatePost, loadPost, error } = usePostContext();
 
   return (
     <>
-      {loadPost === true && <LoadingPosts />}
+      {!loadPost && error && <h1>Something went wrong</h1>}
 
-      {!loadPost && post.length === 0 && <EmptyMessage />}
+      {!error && loadPost === true && <LoadingPosts />}
+
+      {!error && !loadPost && post.length === 0 && <EmptyMessage />}
 
       {!loadPost &&
         post.map((item, index) => {

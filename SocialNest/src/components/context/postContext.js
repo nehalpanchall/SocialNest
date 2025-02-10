@@ -10,6 +10,7 @@ const DEFAULT_VALUE = [
     selectTab: '',
     setSelectTab: () => {},
     loadPost: 'true',
+    error: 'false',
   },
 ];
 
