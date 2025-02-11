@@ -3,6 +3,7 @@ import { ContextProvider } from './postContext';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
+import { getAPI } from '../axios/AxiosService';
 
 let reducer = (currPost, action) => {
   switch (action.type) {
@@ -131,9 +132,9 @@ const PostContextProvider = ({ children }) => {
     dispatchPost(fetchPostsAction);
   };
 
-  const POST_API = 'https://dummyjson.com/products';
+  // const POST_API = 'https://dummyjson.com/products';
 
-  const [loadPost, error] = customReactQuery(POST_API, fetchPost);
+  const [loadPost, error] = customReactQuery(fetchPost);
 
   return (
     <>
@@ -159,7 +160,7 @@ const PostContextProvider = ({ children }) => {
 export default PostContextProvider;
 
 const customReactQuery = (...args) => {
-  const [API, fetchPost] = args;
+  const [fetchPost] = args;
   const [loadPost, setLoadPost] = useState(false);
   const [error, setError] = useState(false);
 
@@ -171,7 +172,7 @@ const customReactQuery = (...args) => {
       try {
         setLoadPost(true);
         setError(false);
-        let res = await axios.get(API, { signal });
+        let res = await getAPI(signal);
         setLoadPost(false);
         fetchPost && fetchPost(res.data.products);
       } catch (error) {
