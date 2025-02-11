@@ -4,16 +4,24 @@ const api = axios.create({
   baseURL: 'https://dummyjson.com',
 });
 
-function getAPI(signal) {
+// read
+export function getAPI(signal) {
   return api.get('/products', { signal });
 }
 
-function deleteAPI(id) {
+// delete
+export function deleteAPI(id) {
   return api.delete(`/products/${id}`);
 }
 
-function addAPI(data) {
+// create
+export function addAPI(data) {
   return api.post('posts/add', data);
 }
 
-export { getAPI, deleteAPI, addAPI };
+// update
+export function putAPI(id) {
+  return api.put(`/posts/${id}`);
+}
+
+// export { getAPI, deleteAPI, addAPI, putAPI };

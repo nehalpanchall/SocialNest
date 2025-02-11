@@ -3,7 +3,7 @@ import { ContextProvider } from './postContext';
 import { useNavigate } from 'react-router-dom';
 
 import { getAPI } from '../axios/AxiosService';
-import { deleteAPI } from '../axios/axiosService';
+import { deleteAPI, putAPI } from '../axios/axiosService';
 
 let reducer = (currPost, action) => {
   switch (action.type) {
@@ -31,12 +31,14 @@ let reducer = (currPost, action) => {
 
     case 'UPDATE_POST':
       const { title, body, tags } = action.payload.APIPost;
-      const { updateItem } = action.payload;
+      const { updateItem, updateId } = action.payload;
+
       let updateTags = tags.split(',');
+
       let updatePost = currPost.map((currItem) => {
         if (currItem === updateItem) {
           return {
-            id: updateItem.id,
+            id: updateId,
             title: title,
             description: body,
             tags: updateTags,
@@ -69,16 +71,26 @@ const PostContextProvider = ({ children }) => {
     (APIPost, tabValue) => {
       if (updateItem) {
         // update existing
-        const updatePostAction = {
-          type: 'UPDATE_POST',
-          payload: {
-            APIPost,
-            updateItem,
-          },
-        };
+        (async () => {
+          try {
+            setError(false);
+            let res = await putAPI(updateItem.id);
 
-        dispatchPost(updatePostAction);
-        setUpdateItem(null);
+            const updatePostAction = {
+              type: 'UPDATE_POST',
+              payload: {
+                updateId: res.data.id,
+                APIPost,
+                updateItem,
+              },
+            };
+
+            dispatchPost(updatePostAction);
+            setUpdateItem(null);
+          } catch (error) {
+            setError(true);
+          }
+        })();
       } else {
         // insert new
         setId((prevId) => {
