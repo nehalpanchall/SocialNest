@@ -131,33 +131,9 @@ const PostContextProvider = ({ children }) => {
     dispatchPost(fetchPostsAction);
   };
 
-  const [loadPost, setLoadPost] = useState(false);
-
-  const [error, setError] = useState(false);
-
   const POST_API = 'https://dummyjson.com/products';
 
-  useEffect(() => {
-    let controller = new AbortController();
-    let signal = controller.signal;
-
-    (async () => {
-      try {
-        setLoadPost(true);
-        setError(false);
-        let res = await axios.get(POST_API, { signal });
-        setLoadPost(false);
-        fetchPost(res.data.products);
-      } catch (error) {
-        setLoadPost(false);
-        setError(true);
-      }
-    })();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
+  const [loadPost, error] = customReactQuery(POST_API, fetchPost);
 
   return (
     <>
@@ -181,3 +157,33 @@ const PostContextProvider = ({ children }) => {
 };
 
 export default PostContextProvider;
+
+const customReactQuery = (API, fetchPost) => {
+  const [loadPost, setLoadPost] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let controller = new AbortController();
+    let signal = controller.signal;
+
+    (async () => {
+      try {
+        setLoadPost(true);
+        setError(false);
+        let res = await axios.get(API, { signal });
+        setLoadPost(false);
+        fetchPost && fetchPost(res.data.products);
+      } catch (error) {
+        setLoadPost(false);
+        console.log(error.message);
+        setError(true);
+      }
+    })();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  return [loadPost, error];
+};
