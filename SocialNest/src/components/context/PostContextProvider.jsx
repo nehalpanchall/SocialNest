@@ -158,7 +158,8 @@ const PostContextProvider = ({ children }) => {
 
 export default PostContextProvider;
 
-const customReactQuery = (API, fetchPost) => {
+const customReactQuery = (...args) => {
+  const [API, fetchPost] = args;
   const [loadPost, setLoadPost] = useState(false);
   const [error, setError] = useState(false);
 
