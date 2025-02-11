@@ -2,8 +2,8 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import { ContextProvider } from './postContext';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
 import { getAPI } from '../axios/AxiosService';
+import { deleteAPI } from '../axios/axiosService';
 
 let reducer = (currPost, action) => {
   switch (action.type) {
@@ -20,9 +20,10 @@ let reducer = (currPost, action) => {
       return addPost;
 
     case 'DELETE_POST':
-      let deleteItem = action.payload.deleteItem;
-      let notDeleteItems = currPost.filter((item) => item !== deleteItem);
-      return notDeleteItems;
+      let deleteId = action.payload.deleteId;
+
+      let notDelete = currPost.filter((item) => item.id !== deleteId);
+      return notDelete;
 
     case 'FETCH_POSTS':
       currPost = action.payload.postsList;
@@ -101,14 +102,21 @@ const PostContextProvider = ({ children }) => {
   );
 
   const deletePost = useCallback(
-    (deleteItem) => {
-      const deletePostAction = {
-        type: 'DELETE_POST',
-        payload: {
-          deleteItem,
-        },
-      };
-      dispatchPost(deletePostAction);
+    async (deleteItem) => {
+      const { id } = deleteItem;
+
+      try {
+        let res = await deleteAPI(id);
+        const deletePostAction = {
+          type: 'DELETE_POST',
+          payload: {
+            deleteId: res.data.id,
+          },
+        };
+        dispatchPost(deletePostAction);
+      } catch (error) {
+        setError(true);
+      }
     },
     [dispatchPost]
   );
@@ -134,7 +142,7 @@ const PostContextProvider = ({ children }) => {
 
   // const POST_API = 'https://dummyjson.com/products';
 
-  const [loadPost, error] = customReactQuery(fetchPost);
+  const [loadPost, error, setError] = customReactQuery(fetchPost);
 
   return (
     <>
@@ -187,5 +195,5 @@ const customReactQuery = (...args) => {
     };
   }, []);
 
-  return [loadPost, error];
+  return [loadPost, error, setError];
 };

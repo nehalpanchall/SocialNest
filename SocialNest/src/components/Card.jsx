@@ -18,7 +18,8 @@ const Card = () => {
 
       {!error && !loadPost && post.length === 0 && <EmptyMessage />}
 
-      {!loadPost &&
+      {!error &&
+        !loadPost &&
         post.map((item, index) => {
           return (
             <div className="card" key={item + index}>

@@ -8,4 +8,8 @@ function getAPI(signal) {
   return api.get('/products', { signal });
 }
 
-export { getAPI };
+function deleteAPI(id) {
+  return api.delete(`/products/${id}`);
+}
+
+export { getAPI, deleteAPI };
