@@ -74,7 +74,9 @@ const PostContextProvider = ({ children }) => {
         (async () => {
           try {
             setError(false);
-            let res = await putAPI(updateItem.id);
+            let res = await putAPI(updateItem.id, updateItem);
+
+            console.log(res.data);
 
             const updatePostAction = {
               type: 'UPDATE_POST',

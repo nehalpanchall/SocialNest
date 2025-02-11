@@ -20,8 +20,8 @@ export function addAPI(data) {
 }
 
 // update
-export function putAPI(id) {
-  return api.put(`/posts/${id}`);
+export function putAPI(id, data) {
+  return api.put(`/posts/${id}`, data);
 }
 
 // export { getAPI, deleteAPI, addAPI, putAPI };
