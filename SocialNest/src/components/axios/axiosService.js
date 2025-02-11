@@ -12,4 +12,8 @@ function deleteAPI(id) {
   return api.delete(`/products/${id}`);
 }
 
-export { getAPI, deleteAPI };
+function addAPI(data) {
+  return api.post('posts/add', data);
+}
+
+export { getAPI, deleteAPI, addAPI };

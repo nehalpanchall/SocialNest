@@ -80,7 +80,6 @@ const PostContextProvider = ({ children }) => {
         dispatchPost(updatePostAction);
         setUpdateItem(null);
       } else {
-        console.log(tabValue);
         // insert new
         setId((prevId) => {
           let newId = prevId + 1;
@@ -157,6 +156,7 @@ const PostContextProvider = ({ children }) => {
           setSelectTab,
           loadPost,
           error,
+          setError,
         }}
       >
         {children}

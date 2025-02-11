@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import '../index.css';
 import { usePostContext } from './context/postContext';
 import { useNavigate } from 'react-router-dom';
+import { addAPI } from './axios/axiosService';
 
 const CreatePost = () => {
   // let { createPost, updateItem } = useContext(contextObject);
-  let { createPost, updateItem } = usePostContext();
+  let { createPost, updateItem, setError } = usePostContext();
 
   const navigate = useNavigate();
 
@@ -13,22 +14,37 @@ const CreatePost = () => {
   const [desc, setDesc] = useState('');
   const [tags, setTags] = useState('');
 
-  const postAPI = (e) => {
+  const postAPI = async (e) => {
     e.preventDefault();
 
-    const ADD_URL = 'https://dummyjson.com/posts/add';
-
-    let promiseX = fetch(ADD_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    try {
+      const postObj = {
         userId: 6,
         title: title,
         body: desc,
         tags: tags,
-      }),
-    });
-    promiseX.then((res) => res.json()).then((data) => createPost(data, 'home'));
+      };
+
+      setError(false);
+      let res = await addAPI(postObj);
+      createPost(res.data, 'home');
+    } catch (error) {
+      setError(true);
+    }
+
+    // const ADD_URL = 'https://dummyjson.com/posts/add';
+
+    // let promiseX = fetch(ADD_URL, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     userId: 6,
+    //     title: title,
+    //     body: desc,
+    //     tags: tags,
+    //   }),
+    // });
+    // promiseX.then((res) => res.json()).then((data) => createPost(data, 'home'));
 
     setTitle('');
     setDesc('');
