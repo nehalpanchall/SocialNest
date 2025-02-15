@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../index.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaPencil } from 'react-icons/fa6';

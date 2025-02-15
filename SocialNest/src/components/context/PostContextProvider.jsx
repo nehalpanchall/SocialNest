@@ -199,7 +199,6 @@ const customReactQuery = (...args) => {
         fetchPost && fetchPost(res.data.products);
       } catch (error) {
         setLoadPost(false);
-        console.log(error.message);
         setError(true);
       }
     })();
