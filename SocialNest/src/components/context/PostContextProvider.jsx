@@ -2,8 +2,7 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import { ContextProvider } from './postContext';
 import { useNavigate } from 'react-router-dom';
 
-import { getAPI } from '../axios/AxiosService';
-import { deleteAPI, putAPI } from '../axios/axiosService';
+import { deleteAPI, putAPI, getAPI } from '../axios/axiosService';
 
 let reducer = (currPost, action) => {
   switch (action.type) {
